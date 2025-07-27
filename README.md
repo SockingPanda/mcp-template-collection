@@ -54,7 +54,8 @@ mcp-with-mutiserver/
 │           └── utils.py           # 内部工具函数
 ├── docs/                  # 文档目录
 │   ├── QUICKSTART.md      # 快速开始指南
-│   └── DEVELOPMENT_GUIDE.md # 开发指南
+│   ├── DEVELOPMENT_GUIDE.md # 开发指南
+│   └── CHANGELOG.md       # 变更日志
 └── requirements.txt       # 项目依赖
 ```
 
@@ -242,6 +243,13 @@ uvicorn main:root --host 0.0.0.0 --port 8000 --workers 4
 
 本项目采用 MIT 许可证 - 查看 [LICENSE](LICENSE) 文件了解详情。
 
+## 📝 项目文档
+
+- [AGENT.md](AGENT.md) - AI代理操作指南
+- [docs/QUICKSTART.md](docs/QUICKSTART.md) - 快速开始指南
+- [docs/DEVELOPMENT_GUIDE.md](docs/DEVELOPMENT_GUIDE.md) - 详细开发指南
+- [docs/CHANGELOG.md](docs/CHANGELOG.md) - 版本历史和变更记录
+
 ## 🙏 致谢
 
 - [FastMCP](https://github.com/fastmcp/fastmcp) - 提供 MCP 服务器框架
@@ -259,3 +267,4 @@ uvicorn main:root --host 0.0.0.0 --port 8000 --workers 4
 2. **替换示例模块** - 将 `module_a`、`module_b` 替换为实际业务模块
 3. **调整配置** - 根据部署环境更新端口、域名等配置
 4. **更新依赖** - 根据实际技术栈调整 `requirements.txt` 
+5. **查看变更历史** - 参考 [CHANGELOG.md](docs/CHANGELOG.md) 了解项目的演进历程 
