@@ -40,6 +40,11 @@ mcp = FastMCP("Your Module Name")
 from .tools import *
 from .resources import *
 from .prompts import *
+
+# 内部代码可以通过相对导入使用
+# from .internal.data_processing import process_data
+# from .internal.api_client import fetch_data
+# from .internal.utils import format_data
 ```
 
 ### 模块命名规范
@@ -53,6 +58,15 @@ from .prompts import *
 - ✅ `text_processing`
 - ❌ `math` (可能冲突)
 - ❌ `import` (保留字)
+
+### 模块目录结构
+
+每个模块应包含以下目录：
+
+- **tools/**: 公开的工具函数
+- **resources/**: 公开的资源
+- **prompts/**: 公开的提示
+- **internal/**: 私有的内部代码（可选，可根据需要自定义）
 
 ## 🛠️ 工具开发
 
@@ -85,6 +99,8 @@ def tool_function(param1: type, param2: type) -> return_type:
 ```python
 from typing import List, Optional
 from ..server import mcp
+from ..internal.data_processing import process_data
+from ..internal.api_client import fetch_data
 
 @mcp.tool("calculate_average")
 def calculate_average(numbers: List[float]) -> float:
@@ -96,7 +112,9 @@ def calculate_average(numbers: List[float]) -> float:
 @mcp.tool("format_text")
 def format_text(text: str, uppercase: bool = False) -> str:
     """格式化文本"""
-    result = text.strip()
+    # 使用内部数据处理
+    processed_text = process_data({"text": text, "uppercase": uppercase})
+    result = processed_text["text"].strip()
     if uppercase:
         result = result.upper()
     return result
@@ -130,11 +148,14 @@ def resource_function(param_name: str) -> str:
 
 ```python
 from ..server import mcp
+from ..internal.api_client import fetch_data
+from ..internal.utils import format_data
 
 @mcp.resource("user/{user_id}")
 def get_user_profile(user_id: str) -> str:
     """获取用户配置文件"""
-    # 这里可以连接数据库或调用 API
+    # 使用内部 API 客户端获取数据
+    user_data = fetch_data()
     return f"用户 {user_id} 的配置文件"
 
 @mcp.resource("config/{config_name}")
@@ -145,7 +166,79 @@ def get_config(config_name: str) -> str:
         "api": "API 配置信息",
         "security": "安全配置信息"
     }
-    return configs.get(config_name, "配置不存在")
+    # 使用内部工具函数格式化
+    return format_data(configs.get(config_name, "配置不存在"))
+```
+
+## 🔧 内部代码开发
+
+### 内部代码结构
+
+每个模块的 `internal/` 目录包含私有代码，用于支持公开的工具、资源和提示。内部文件可根据模块需求自定义：
+
+```
+internal/
+├── __init__.py           # 包初始化
+├── data_processing.py    # 数据处理逻辑（可选）
+├── api_client.py         # API 客户端（可选）
+├── utils.py              # 内部工具函数（可选）
+└── ...                   # 其他自定义文件
+```
+
+### 内部代码使用原则
+
+1. **私有性**: `internal/` 目录中的代码不直接暴露给外部
+2. **支持性**: 内部代码用于支持公开接口的功能
+3. **可重用性**: 内部函数应该可以在多个公开接口中重用
+4. **简洁性**: 保持内部代码简洁，专注于核心功能
+5. **灵活性**: 内部文件结构可根据模块需求自定义
+
+### 内部代码示例
+
+```python
+# internal/data_processing.py（可选）
+def process_data(data):
+    """处理数据"""
+    return {"processed": data}
+
+# internal/api_client.py（可选）
+def fetch_data():
+    """获取外部数据"""
+    return {"status": "success", "data": []}
+
+# internal/utils.py（可选）
+def format_data(data):
+    """格式化数据"""
+    return f"processed: {data}"
+
+# 其他自定义文件示例
+# internal/database.py
+def get_db_connection():
+    """数据库连接"""
+    pass
+
+# internal/cache.py
+def cache_data(key, value):
+    """缓存数据"""
+    pass
+```
+
+### 在公开接口中使用内部代码
+
+```python
+# tools/your_tool.py
+from ..server import mcp
+from ..internal.data_processing import process_data
+from ..internal.api_client import fetch_data
+
+@mcp.tool("process_external_data")
+def process_external_data() -> str:
+    """处理外部数据"""
+    # 获取数据
+    raw_data = fetch_data()
+    # 处理数据
+    processed_data = process_data(raw_data)
+    return f"处理完成: {processed_data}"
 ```
 
 ## 💬 提示开发
@@ -170,11 +263,14 @@ def prompt_function(text: str) -> str:
 
 ```python
 from ..server import mcp
+from ..internal.data_processing import process_data
 
 @mcp.prompt("summarize")
 def summarize_text(text: str) -> str:
     """生成文本摘要"""
-    return f"请用简洁的语言总结以下内容：\n\n{text}"
+    # 使用内部数据处理
+    processed_text = process_data({"text": text})
+    return f"请用简洁的语言总结以下内容：\n\n{processed_text['text']}"
 
 @mcp.prompt("translate")
 def translate_text(text: str, target_language: str = "英文") -> str:

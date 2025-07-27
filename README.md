@@ -18,28 +18,40 @@ mcp-with-mutiserver/
 ├── modules/                # 模块目录
 │   ├── module_a/          # 模块 A (数学工具示例)
 │   │   ├── server.py      # 模块 A 的 MCP 服务器
-│   │   ├── tools/         # 工具目录
+│   │   ├── tools/         # 公开的工具
 │   │   │   ├── __init__.py
 │   │   │   └── math.py    # 数学工具 (add, subtract)
-│   │   ├── resources/     # 资源目录
+│   │   ├── resources/     # 公开的资源
 │   │   │   ├── __init__.py
 │   │   │   └── profile.py # 配置文件资源
-│   │   └── prompts/       # 提示目录
+│   │   ├── prompts/       # 公开的提示
+│   │   │   ├── __init__.py
+│   │   │   └── summary.py # 总结提示
+│   │   └── internal/      # 私有的内部代码
 │   │       ├── __init__.py
-│   │       └── summary.py # 总结提示
+│   │       ├── data_processing.py # 数据处理逻辑
+│   │       ├── api_client.py      # API 客户端
+│   │       └── utils.py           # 内部工具函数
 │   └── module_b/          # 模块 B (文本工具示例)
 │       ├── server.py      # 模块 B 的 MCP 服务器
-│       ├── tools/         # 工具目录
+│       ├── tools/         # 公开的工具
 │       │   ├── __init__.py
 │       │   └── text.py    # 文本工具 (reverse, uppercase, word_count)
-│       ├── resources/     # 资源目录
+│       ├── resources/     # 公开的资源
 │       │   ├── __init__.py
 │       │   └── items.py   # 项目资源
-│       └── prompts/       # 提示目录
+│       ├── prompts/       # 公开的提示
+│       │   ├── __init__.py
+│       │   └── summary.py # 总结提示
+│       └── internal/      # 私有的内部代码
 │           ├── __init__.py
-│           └── summary.py # 总结提示
-└── utils/                 # 工具目录
-    └── registry.py        # 注册工具
+│           ├── data_processing.py # 数据处理逻辑
+│           ├── api_client.py      # API 客户端
+│           └── utils.py           # 内部工具函数
+├── docs/                  # 文档目录
+│   ├── QUICKSTART.md      # 快速开始指南
+│   └── DEVELOPMENT_GUIDE.md # 开发指南
+└── requirements.txt       # 项目依赖
 ```
 
 ## 🛠️ 快速开始
@@ -68,8 +80,8 @@ uvicorn main:root --host 0.0.0.0 --port 8000
 ### 步骤 1: 创建新模块目录
 
 ```bash
-mkdir -p modules/your_module/{tools,resources,prompts}
-touch modules/your_module/{tools,resources,prompts}/__init__.py
+mkdir -p modules/your_module/{tools,resources,prompts,internal}
+touch modules/your_module/{tools,resources,prompts,internal}/__init__.py
 ```
 
 ### 步骤 2: 创建服务器文件
