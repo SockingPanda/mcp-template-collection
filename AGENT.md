@@ -17,6 +17,10 @@
 mcp-template-collection/
 ├── main.py                 # 主入口文件，统一路由管理
 ├── modules/                # 模块目录
+│   ├── common/             # 公共内部代码
+│   │   ├── core/           # 核心共享逻辑
+│   │   ├── db/             # 数据库与缓存封装
+│   │   └── tests/          # 公共测试
 │   ├── module_a/          # 数学工具模块
 │   │   ├── server.py      # 模块 A 的 MCP 服务器
 │   │   ├── config.yaml    # 模块配置文件
@@ -50,6 +54,7 @@ mcp-template-collection/
 ```
 
 上述结构中：
+- `common/` 目录用于存放跨模块共享的内部代码，并附带相应的测试。
 - `config.yaml` 存放模块级配置，可根据环境调整参数。
 - `examples/` 提供工具和资源的调用示例，便于快速参考。
 - `tests/` 目录包含 `unit/` 与 `integration/` 子目录，分别用于单元测试和集成测试。
