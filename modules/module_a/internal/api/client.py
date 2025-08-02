@@ -3,4 +3,4 @@
 
 def fetch_data():
     """获取外部数据"""
-    return {"status": "success", "data": []} 
+    return {"status": "success", "data": []}

@@ -3,4 +3,4 @@
 
 def format_data(data):
     """格式化数据"""
-    return f"processed: {data}" 
+    return f"processed: {data}"

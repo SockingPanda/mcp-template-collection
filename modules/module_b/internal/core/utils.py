@@ -3,4 +3,4 @@
 
 def clean_text(text):
     """清理文本"""
-    return text.strip() 
+    return text.strip()

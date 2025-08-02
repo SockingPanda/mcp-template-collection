@@ -39,8 +39,10 @@ uvicorn main:root --host 0.0.0.0 --port 8000
 ### 步骤 1: 创建新模块
 
 ```bash
-mkdir -p modules/my_module/{tools,resources,prompts,internal}
-touch modules/my_module/{tools,resources,prompts,internal}/__init__.py
+mkdir -p modules/my_module/{tools,resources,prompts,examples,tests/unit,tests/integration,internal/{api,core,db}}
+touch modules/my_module/{tools,resources,prompts}/__init__.py
+touch modules/my_module/internal/{api,core,db}/__init__.py
+touch modules/my_module/config.yaml
 ```
 
 ### 步骤 2: 创建服务器文件
@@ -102,17 +104,17 @@ Mount("/my_module/streamable", app=app_my_streamable),
 如果需要内部支持代码，可以在 `internal/` 目录中添加：
 
 ```python
-# modules/my_module/internal/data_processing.py
+# modules/my_module/internal/core/data_processing.py
 def process_data(data):
     """处理数据"""
     return {"processed": data}
 
-# modules/my_module/internal/api_client.py
+# modules/my_module/internal/api/client.py
 def fetch_data():
     """获取数据"""
     return {"status": "success"}
 
-# modules/my_module/internal/utils.py
+# modules/my_module/internal/core/utils.py
 def format_data(data):
     """格式化数据"""
     return f"processed: {data}"
@@ -123,7 +125,7 @@ def format_data(data):
 ```python
 # modules/my_module/tools/hello.py
 from ..server import mcp
-from ..internal.data_processing import process_data
+from ..internal.core.data_processing import process_data
 
 @mcp.tool("hello")
 def hello(name: str) -> str:
@@ -132,7 +134,19 @@ def hello(name: str) -> str:
     return f"你好，{data['name']}！欢迎使用 MCP 多服务器模板！"
 ```
 
-### 步骤 7: 重启服务器
+### 步骤 7: 添加测试（可选）
+
+```python
+# modules/my_module/tests/unit/test_example.py
+def test_example():
+    assert True
+
+# modules/my_module/tests/integration/test_example.py
+def test_example_integration():
+    assert True
+```
+
+### 步骤 8: 重启服务器
 
 ```bash
 uvicorn main:root --host 0.0.0.0 --port 8000 --reload

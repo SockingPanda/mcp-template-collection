@@ -2,6 +2,16 @@
 
 本文档记录项目的所有重要变更。
 
+## [2.1.0] - 2025-08-02
+
+### Added
+- 为每个模块新增 `config.yaml`、`examples` 和 `tests` 目录
+- 重构 `internal` 目录为 `api`、`core` 和 `db` 子包
+- 更新 `AGENT.md`、`README.md`、`QUICKSTART.md` 和 `DEVELOPMENT_GUIDE.md`
+
+### Changed
+- 调整项目结构说明，补充测试与示例用法
+
 ## [2.0.0] - 2025-07-28
 
 ### Added

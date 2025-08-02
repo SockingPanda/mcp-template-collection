@@ -10,4 +10,4 @@ def add(a: int, b: int) -> int:
 def subtract(a: int, b: int) -> int:
     """Subtract two integers and return their difference."""
     print(f"Subtracting {b} from {a}")
-    return a - b 
+    return a - b
