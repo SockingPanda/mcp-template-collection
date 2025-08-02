@@ -13,6 +13,8 @@
 - **统一路由**: 通过单一入口点管理所有服务器
 - **灵活传输**: 支持 SSE 和 HTTP 流式传输
 - **完整示例**: 包含工具、资源和提示的完整示例
+- **异步数据库抽象**: 通过仓储模式解耦数据获取与存储
+- **SQLAlchemy 支持**: 使用 ORM 兼容 SQLite、PostgreSQL 等关系型数据库，可通过 `DATABASE_URL` 环境变量切换
 
 ## 📁 项目结构
 
@@ -20,12 +22,18 @@
 mcp-with-mutiserver/
 ├── main.py                 # 主入口文件，统一路由管理
 ├── modules/                # 模块目录
+│   ├── common/           # 共享组件 (数据库与仓储)
+│   │   ├── db/          # 抽象数据库与实现
+│   │   │   ├── base.py
+│   │   │   └── sqlalchemy.py
+│   │   └── core/        # 通用核心逻辑
 │   ├── module_a/          # 模块 A (数学工具示例)
 │   │   ├── server.py      # 模块 A 的 MCP 服务器
 │   │   ├── config.yaml    # 模块配置文件
 │   │   ├── tools/         # 公开的工具
 │   │   │   ├── __init__.py
-│   │   │   └── math.py    # 数学工具 (add, subtract)
+│   │   │   ├── math.py    # 数学工具 (add, subtract)
+│   │   │   └── fetch_external.py # 示例数据获取工具
 │   │   ├── resources/     # 公开的资源
 │   │   │   ├── __init__.py
 │   │   │   └── profile.py # 配置文件资源
@@ -85,7 +93,10 @@ pip install fastmcp uvicorn
 
 ### 2. 运行服务器
 
+可通过 `DATABASE_URL` 环境变量在 SQLite 与 PostgreSQL 间切换数据库（默认使用本地 SQLite）：
+
 ```bash
+# export DATABASE_URL=postgresql+asyncpg://user:pass@localhost/dbname
 uvicorn main:root --host 0.0.0.0 --port 8000
 ```
 

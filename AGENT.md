@@ -17,6 +17,9 @@
 mcp-template-collection/
 ├── main.py                 # 主入口文件，统一路由管理
 ├── modules/                # 模块目录
+│   ├── common/           # 共享组件（数据库与仓储）
+│   │   ├── db/          # SQLAlchemy 适配器与数据库抽象
+│   │   └── core/        # 通用仓储等核心逻辑
 │   ├── module_a/          # 数学工具模块
 │   │   ├── server.py      # 模块 A 的 MCP 服务器
 │   │   ├── config.yaml    # 模块配置文件
@@ -53,9 +56,16 @@ mcp-template-collection/
 - `config.yaml` 存放模块级配置，可根据环境调整参数。
 - `examples/` 提供工具和资源的调用示例，便于快速参考。
 - `tests/` 目录包含 `unit/` 与 `integration/` 子目录，分别用于单元测试和集成测试。
-- `internal/` 现拆分为 `api/`、`core/` 和 `db/`，使 API 客户端、核心逻辑和数据库代码解耦。
+- `internal/` 现拆分为 `api`、`core` 和 `db`，使 API 客户端、核心逻辑和数据库代码解耦。
+- `modules/common` 提供跨模块共享的数据库与仓储逻辑，`db/` 使用 SQLAlchemy 兼容 SQLite 与 PostgreSQL（通过 `DATABASE_URL` 切换），`core/` 中包含通用的 `DataRepository`。
 
 ## 🛠️ 常用操作指南
+
+### 0. 配置数据库
+项目使用 SQLAlchemy 作为持久层，默认采用本地 SQLite。通过设置 `DATABASE_URL` 环境变量可切换到 PostgreSQL 等其他数据库，例如：
+```bash
+export DATABASE_URL=postgresql+asyncpg://user:pass@localhost/dbname
+```
 
 ### 1. 启动服务器
 ```bash
