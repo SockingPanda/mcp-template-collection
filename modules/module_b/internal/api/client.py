@@ -3,4 +3,4 @@
 
 def get_text_data():
     """获取文本数据"""
-    return "sample text" 
+    return "sample text"

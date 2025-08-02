@@ -13,26 +13,47 @@
 - **灵活传输**: 支持 SSE 和 HTTP 流式传输
 
 ## 📁 项目结构理解
-
 ```
 mcp-template-collection/
 ├── main.py                 # 主入口文件，统一路由管理
 ├── modules/                # 模块目录
 │   ├── module_a/          # 数学工具模块
 │   │   ├── server.py      # 模块 A 的 MCP 服务器
+│   │   ├── config.yaml    # 模块配置文件
 │   │   ├── tools/         # 公开的工具 (add, subtract)
 │   │   ├── resources/     # 公开的资源 (profile)
 │   │   ├── prompts/       # 公开的提示 (summary)
+│   │   ├── examples/      # 使用示例
+│   │   ├── tests/         # 单元与集成测试
+│   │   │   ├── unit/      # 单元测试
+│   │   │   └── integration/ # 集成测试
 │   │   └── internal/      # 私有的内部代码
+│   │       ├── api/       # API 客户端
+│   │       ├── core/      # 核心逻辑与工具函数
+│   │       └── db/        # 数据库与缓存
 │   └── module_b/          # 文本工具模块
 │       ├── server.py      # 模块 B 的 MCP 服务器
+│       ├── config.yaml    # 模块配置文件
 │       ├── tools/         # 公开的工具 (reverse, uppercase, word_count)
 │       ├── resources/     # 公开的资源 (items)
 │       ├── prompts/       # 公开的提示 (summary)
+│       ├── examples/      # 使用示例
+│       ├── tests/         # 单元与集成测试
+│       │   ├── unit/      # 单元测试
+│       │   └── integration/ # 集成测试
 │       └── internal/      # 私有的内部代码
+│           ├── api/       # API 客户端
+│           ├── core/      # 核心逻辑与工具函数
+│           └── db/        # 数据库与缓存
 ├── docs/                  # 文档目录
 └── requirements.txt       # 项目依赖
 ```
+
+上述结构中：
+- `config.yaml` 存放模块级配置，可根据环境调整参数。
+- `examples/` 提供工具和资源的调用示例，便于快速参考。
+- `tests/` 目录包含 `unit/` 与 `integration/` 子目录，分别用于单元测试和集成测试。
+- `internal/` 现拆分为 `api/`、`core/` 和 `db/`，使 API 客户端、核心逻辑和数据库代码解耦。
 
 ## 🛠️ 常用操作指南
 

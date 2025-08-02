@@ -1,3 +1,3 @@
 from .profile import profile
 
-__all__ = ['profile'] 
+__all__ = ['profile']

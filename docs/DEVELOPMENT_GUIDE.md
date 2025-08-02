@@ -46,9 +46,9 @@ from .resources import *
 from .prompts import *
 
 # 内部代码可以通过相对导入使用
-# from .internal.data_processing import process_data
-# from .internal.api_client import fetch_data
-# from .internal.utils import format_data
+# from .internal.core.data_processing import process_data
+# from .internal.api.client import fetch_data
+# from .internal.core.utils import format_data
 ```
 
 ### 模块命名规范
@@ -65,12 +65,15 @@ from .prompts import *
 
 ### 模块目录结构
 
-每个模块应包含以下目录：
+每个模块应包含以下内容：
 
+- **config.yaml**: 模块配置文件
 - **tools/**: 公开的工具函数
 - **resources/**: 公开的资源
 - **prompts/**: 公开的提示
-- **internal/**: 私有的内部代码（可选，可根据需要自定义）
+- **examples/**: 使用示例
+- **tests/**: 测试目录，包含 `unit/` 与 `integration/`
+- **internal/**: 私有的内部代码，拆分为 `api/`、`core/` 和 `db/`
 
 ## 🛠️ 工具开发
 
@@ -103,8 +106,8 @@ def tool_function(param1: type, param2: type) -> return_type:
 ```python
 from typing import List, Optional
 from ..server import mcp
-from ..internal.data_processing import process_data
-from ..internal.api_client import fetch_data
+from ..internal.core.data_processing import process_data
+from ..internal.api.client import fetch_data
 
 @mcp.tool("calculate_average")
 def calculate_average(numbers: List[float]) -> float:

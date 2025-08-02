@@ -22,6 +22,7 @@ mcp-with-mutiserver/
 ├── modules/                # 模块目录
 │   ├── module_a/          # 模块 A (数学工具示例)
 │   │   ├── server.py      # 模块 A 的 MCP 服务器
+│   │   ├── config.yaml    # 模块配置文件
 │   │   ├── tools/         # 公开的工具
 │   │   │   ├── __init__.py
 │   │   │   └── math.py    # 数学工具 (add, subtract)
@@ -31,13 +32,21 @@ mcp-with-mutiserver/
 │   │   ├── prompts/       # 公开的提示
 │   │   │   ├── __init__.py
 │   │   │   └── summary.py # 总结提示
+│   │   ├── examples/      # 使用示例
+│   │   ├── tests/         # 单元与集成测试
+│   │   │   ├── unit/
+│   │   │   └── integration/
 │   │   └── internal/      # 私有的内部代码
 │   │       ├── __init__.py
-│   │       ├── data_processing.py # 数据处理逻辑
-│   │       ├── api_client.py      # API 客户端
-│   │       └── utils.py           # 内部工具函数
+│   │       ├── api/       # API 客户端
+│   │       │   └── client.py
+│   │       ├── core/      # 核心逻辑与工具函数
+│   │       │   ├── data_processing.py
+│   │       │   └── utils.py
+│   │       └── db/        # 数据库与缓存
 │   └── module_b/          # 模块 B (文本工具示例)
 │       ├── server.py      # 模块 B 的 MCP 服务器
+│       ├── config.yaml    # 模块配置文件
 │       ├── tools/         # 公开的工具
 │       │   ├── __init__.py
 │       │   └── text.py    # 文本工具 (reverse, uppercase, word_count)
@@ -47,11 +56,18 @@ mcp-with-mutiserver/
 │       ├── prompts/       # 公开的提示
 │       │   ├── __init__.py
 │       │   └── summary.py # 总结提示
+│       ├── examples/      # 使用示例
+│       ├── tests/         # 单元与集成测试
+│       │   ├── unit/
+│       │   └── integration/
 │       └── internal/      # 私有的内部代码
 │           ├── __init__.py
-│           ├── data_processing.py # 数据处理逻辑
-│           ├── api_client.py      # API 客户端
-│           └── utils.py           # 内部工具函数
+│           ├── api/       # API 客户端
+│           │   └── client.py
+│           ├── core/      # 核心逻辑与工具函数
+│           │   ├── data_processing.py
+│           │   └── utils.py
+│           └── db/        # 数据库与缓存
 ├── docs/                  # 文档目录
 │   ├── QUICKSTART.md      # 快速开始指南
 │   ├── DEVELOPMENT_GUIDE.md # 开发指南
@@ -85,8 +101,10 @@ uvicorn main:root --host 0.0.0.0 --port 8000
 ### 步骤 1: 创建新模块目录
 
 ```bash
-mkdir -p modules/your_module/{tools,resources,prompts,internal}
-touch modules/your_module/{tools,resources,prompts,internal}/__init__.py
+mkdir -p modules/your_module/{tools,resources,prompts,examples,tests/unit,tests/integration,internal/{api,core,db}}
+touch modules/your_module/{tools,resources,prompts}/__init__.py
+touch modules/your_module/internal/{api,core,db}/__init__.py
+touch modules/your_module/config.yaml
 ```
 
 ### 步骤 2: 创建服务器文件

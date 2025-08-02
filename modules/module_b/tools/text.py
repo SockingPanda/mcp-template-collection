@@ -16,4 +16,4 @@ def uppercase(text: str) -> str:
 def word_count(text: str) -> int:
     """Count the number of words in a string."""
     print(f"Counting words in: {text}")
-    return len(text.split()) 
+    return len(text.split())
