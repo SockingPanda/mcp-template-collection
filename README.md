@@ -13,6 +13,8 @@
 - **统一路由**: 通过单一入口点管理所有服务器
 - **灵活传输**: 支持 SSE 和 HTTP 流式传输
 - **完整示例**: 包含工具、资源和提示的完整示例
+- **异步数据库抽象**: 通过仓储模式解耦数据获取与存储
+- **SQLAlchemy 支持**: 使用 ORM 兼容 SQLite、PostgreSQL 等关系型数据库
 
 ## 📁 项目结构
 
@@ -20,12 +22,17 @@
 mcp-with-mutiserver/
 ├── main.py                 # 主入口文件，统一路由管理
 ├── modules/                # 模块目录
+│   ├── common/           # 共享组件 (数据库与仓储)
+│   │   ├── db/          # SQLAlchemy 数据库适配器
+│   │   │   └── sqlalchemy.py
+│   │   └── core/        # 通用核心逻辑
 │   ├── module_a/          # 模块 A (数学工具示例)
 │   │   ├── server.py      # 模块 A 的 MCP 服务器
 │   │   ├── config.yaml    # 模块配置文件
 │   │   ├── tools/         # 公开的工具
 │   │   │   ├── __init__.py
-│   │   │   └── math.py    # 数学工具 (add, subtract)
+│   │   │   ├── math.py    # 数学工具 (add, subtract)
+│   │   │   └── fetch_external.py # 示例数据获取工具
 │   │   ├── resources/     # 公开的资源
 │   │   │   ├── __init__.py
 │   │   │   └── profile.py # 配置文件资源
@@ -74,6 +81,9 @@ mcp-with-mutiserver/
 │   └── CHANGELOG.md       # 变更日志
 └── requirements.txt       # 项目依赖
 ```
+
+模块 A 默认使用 SQLite 数据库文件 `module_a.db`，可通过设置环境变量
+`MODULE_A_DB_URL` 切换为 PostgreSQL 等其他 SQLAlchemy 支持的后端。
 
 ## 🛠️ 快速开始
 
