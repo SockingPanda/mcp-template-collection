@@ -2,6 +2,26 @@
 
 本文档记录项目的所有重要变更。
 
+## [2.4.0] - 2025-08-02
+
+### Changed
+- 移除内存数据库适配器，统一使用 SQLAlchemy 后端
+- 重构 DataRepository 以直接依赖 SQLAlchemyDatabase
+
+## [2.3.0] - 2025-08-02
+
+### Added
+- 新增 `SQLAlchemyDatabase`，使用 SQLAlchemy 兼容多种关系型数据库
+- 更新文档和依赖说明
+
+## [2.2.0] - 2025-08-02
+
+### Added
+- 引入异步数据库抽象层及内存实现
+- 新增 `DataRepository`，实现“查库→外部获取→入库”流程
+- 提供示例工具和单元测试演示数据仓储逻辑
+- 更新 README 与 DEVELOPMENT_GUIDE 说明数据库抽象层
+
 ## [2.1.0] - 2025-08-02
 
 ### Added

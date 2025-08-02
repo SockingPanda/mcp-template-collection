@@ -75,6 +75,13 @@ from .prompts import *
 - **tests/**: 测试目录，包含 `unit/` 与 `integration/`
 - **internal/**: 私有的内部代码，拆分为 `api/`、`core/` 和 `db/`
 
+### 数据库抽象层
+
+- `modules/common/db/sqlalchemy.py` 提供基于 SQLAlchemy 的适配器，支持 SQLite、PostgreSQL 等关系型数据库，通过配置连接字符串即可切换
+- `modules/common/core/repository.py` 实现通用 `DataRepository`，先查本地数据库，再调用外部 API
+- 工具或业务逻辑通过注入 `DataRepository` 实现 `先查库→外部获取→入库` 的统一流程
+- 模块可通过环境变量（如 `MODULE_A_DB_URL`）配置具体的数据库连接
+
 ## 🛠️ 工具开发
 
 ### 工具装饰器语法
