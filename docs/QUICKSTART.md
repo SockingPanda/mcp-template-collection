@@ -25,7 +25,13 @@ pip install fastmcp uvicorn
 uvicorn main:root --host 0.0.0.0 --port 8000
 ```
 
-### 4. 测试连接
+### 4. 运行测试
+
+```bash
+pytest -q
+```
+
+### 5. 测试连接
 
 访问以下端点确认服务正常运行：
 
