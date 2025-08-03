@@ -2,6 +2,12 @@
 
 本文档记录项目的所有重要变更。
 
+## [2.4.2] - 2025-08-02
+
+### Changed
+- 扩展 AGENT.md，新增技术栈、测试命令与版本规范
+- 同步更新 README、DEVELOPMENT_GUIDE 和 QUICKSTART
+
 ## [2.4.1] - 2025-08-02
 
 ### Changed

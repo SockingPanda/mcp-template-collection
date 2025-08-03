@@ -348,6 +348,12 @@ root = Starlette(
 
 ## 🧪 测试指南
 
+在提交代码前运行完整测试套件：
+
+```bash
+pytest -q
+```
+
 ### 单元测试
 
 ```python

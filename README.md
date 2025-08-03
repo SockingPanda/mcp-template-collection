@@ -16,6 +16,12 @@
 - **异步数据库抽象**: 通过仓储模式解耦数据获取与存储
 - **SQLAlchemy 支持**: 使用 ORM 兼容 SQLite、PostgreSQL 等关系型数据库
 
+## 🛠 技术栈
+- Python ≥ 3.11
+- FastMCP
+- Uvicorn
+- SQLAlchemy（可选）
+
 ## 📁 项目结构
 
 ```
@@ -99,7 +105,13 @@ pip install fastmcp uvicorn
 uvicorn main:root --host 0.0.0.0 --port 8000
 ```
 
-### 3. 访问端点
+### 3. 运行测试
+
+```bash
+pytest -q
+```
+
+### 4. 访问端点
 
 - **模块 A SSE**: `http://localhost:8000/module_a/sse`
 - **模块 A HTTP**: `http://localhost:8000/module_a/streamable`
